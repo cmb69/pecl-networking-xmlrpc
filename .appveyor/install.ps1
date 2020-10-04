@@ -63,8 +63,10 @@ if (-not (Test-Path "C:\build-cache\$dname")) {
 }
 $env:PATH = "c:\build-cache\$dname;$env:PATH"
 
-$bname = "$env:DEP-$env:VC-$env:ARCH.zip"
-if (-not (Test-Path c:\build-cache\$bname)) {
-    Invoke-WebRequest "http://windows.php.net/downloads/php-sdk/deps/$env:VC/$env:ARCH/$bname" -OutFile "c:\build-cache\$bname"
-    Expand-Archive "C:\build-cache\$bname" "C:\build-cache\deps"
+foreach ($dep in $env:DEPS.split()) {
+    $bname = "$dep-$env:VC-$env:ARCH.zip"
+    if (-not (Test-Path c:\build-cache\$bname)) {
+        Invoke-WebRequest "http://windows.php.net/downloads/php-sdk/deps/$env:VC/$env:ARCH/$bname" -OutFile "c:\build-cache\$bname"
+        Expand-Archive "C:\build-cache\$bname" "C:\build-cache\deps"
+    }
 }
