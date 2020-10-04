@@ -3,6 +3,7 @@ $ErrorActionPreference = "Stop"
 Set-Location 'C:\projects\xmlrpc'
 
 $task = New-Item 'task.bat' -Force
+Add-Content $task "phpsdk_deps -u"
 Add-Content $task "call phpize 2>&1"
 Add-Content $task "call configure --with-xmlrpc 2>&1"
 Add-Content $task "nmake /nologo 2>&1"
